@@ -18,8 +18,8 @@ STOPWORDS = frozenset(
     their theirs them themselves then there these they this those through to too under
     until up upon us very via was way we were what when where whether which while who
     whom why will with within without would yes yet you your yours yourself yourselves
-    able anything happen happens happened know long many much need needs onto someone
-    something want wants
+    able anything happen happens happened know long many mean means much need needs onto
+    someone something want wants
     """.split()
 )
 
@@ -42,7 +42,7 @@ def stem(word: str) -> str:
     elif word.endswith("s") and not word.endswith(("ss", "us", "is")):
         word = word[:-1]
 
-    for suffix in ("ation", "ment", "ing", "ed", "ly"):
+    for suffix in ("ation", "ment", "ing", "ed"):
         if word.endswith(suffix) and len(word) - len(suffix) >= 3:
             word = word[: -len(suffix)]
             if suffix in ("ing", "ed") and len(word) > 3 and word[-1] == word[-2] and word[-1] not in "lsz":
