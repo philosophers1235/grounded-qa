@@ -64,7 +64,6 @@ questions:
 
   - id: care-plus-price
     question: How much does the Care Plus plan cost?
-    example: true
     sources:
       - doc: maintenance-terms
         section: Maintenance plans

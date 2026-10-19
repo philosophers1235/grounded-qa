@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ask the documents</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap">
+      <p class="wordmark">grounded-qa</p>
+      <h1>Ask the documents</h1>
+      <details class="corpus">
+        <summary>Answers come only from {{ documents | length }} documents ({{ chunk_count }} passages)</summary>
+        <ul>
+          {% for doc in documents %}
+          <li>{{ doc.title }} <span class="muted">{{ doc.path.split('/')[-1] }}</span></li>
+          {% endfor %}
+        </ul>
+      </details>
+      <p class="mode mode-{{ mode }}">
+        {% if mode == "claude" %}
+        Claude ({{ model }}) writes a short answer and cites the passage behind every claim.
+        {% else %}
+        Offline extractive mode: answers are sentences quoted from the documents, with no model involved.
+        {% if offline_note %}<span class="muted">{{ offline_note }}</span>{% endif %}
+        {% endif %}
+      </p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <form id="ask-form" class="ask" autocomplete="off">
+      <label for="question" class="visually-hidden">Question</label>
+      <input id="question" name="question" type="text" maxlength="1000" required
+             placeholder="For example: how long is the warranty?">
+      <button type="submit" id="ask-button">Ask</button>
+    </form>
+
+    {% if examples %}
+    <div class="examples">
+      <span class="muted">Try</span>
+      {% for example in examples %}
+      <button type="button" class="example" data-question="{{ example }}">{{ example }}</button>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="results">
+      <section class="answer" aria-live="polite" aria-labelledby="answer-heading">
+        <h2 id="answer-heading">Answer</h2>
+        <div id="answer-body">
+          <p class="empty">Ask a question and the answer appears here. Each number in the answer opens the passage it came from.</p>
+        </div>
+      </section>
+
+      <section class="sources" aria-labelledby="sources-heading">
+        <h2 id="sources-heading">Sources</h2>
+        <ol id="source-list" class="source-list"></ol>
+        <p id="sources-empty" class="empty">The passages behind the answer are shown here, with the cited words highlighted.</p>
+      </section>
+    </div>
+  </main>
+
+  <script src="{{ url_for('static', path='app.js') }}"></script>
+</body>
+</html>

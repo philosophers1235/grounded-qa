@@ -64,6 +64,13 @@ def build_parser() -> argparse.ArgumentParser:
     evaluate.add_argument("--out", type=Path, default=Path("eval_results.json"), help="where to write per-question results")
     evaluate.set_defaults(handler=cmd_eval)
 
+    serve = commands.add_parser("serve", parents=[common], help="start the web UI")
+    serve.add_argument("--host", default="127.0.0.1")
+    serve.add_argument("--port", type=int, default=8000)
+    serve.add_argument("--offline", action="store_true", help="answer without calling Claude")
+    serve.add_argument("--examples", type=Path, help="question file whose `example: true` entries are shown as suggestions")
+    serve.set_defaults(handler=cmd_serve)
+
     return parser
 
 
@@ -99,6 +106,20 @@ def cmd_eval(args, settings: Settings) -> int:
     print_report(console, report)
     report.write(args.out, args.questions)
     console.print(f"\nPer-question results written to {args.out}")
+    return 0
+
+
+def cmd_serve(args, settings: Settings) -> int:
+    import uvicorn
+
+    from .web.app import create_app
+
+    service = QAService.from_settings(settings, offline=args.offline)
+    examples = [q.question for q in load_questions(args.examples) if q.example] if args.examples else []
+    if service.offline_note:
+        console.print(f"[yellow]{service.offline_note}[/yellow]")
+    console.print(f"Starting the web UI on http://{args.host}:{args.port}")
+    uvicorn.run(create_app(service, examples), host=args.host, port=args.port, log_level="warning")
     return 0
 
 

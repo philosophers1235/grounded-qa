@@ -1,0 +1,296 @@
+:root {
+  --paper: #f5f6f7;
+  --surface: #ffffff;
+  --ink: #1d252c;
+  --muted: #5d6873;
+  --rule: #dde1e5;
+  --accent: #0e6a73;
+  --accent-strong: #0a5259;
+  --accent-soft: #d8eced;
+
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Passages quoted from the documents are set in a serif, so the document's own
+     words never look like the system's answer. */
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+
+  --radius: 6px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.55 var(--sans);
+}
+
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.muted { color: var(--muted); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Masthead */
+
+.masthead {
+  background: var(--surface);
+  border-bottom: 1px solid var(--rule);
+  padding: 28px 0 22px;
+}
+
+.wordmark {
+  margin: 0 0 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+h1 {
+  margin: 0 0 10px;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.corpus { margin: 0 0 6px; color: var(--muted); }
+.corpus summary { cursor: pointer; width: fit-content; }
+.corpus ul { margin: 8px 0 0; padding-left: 20px; }
+.corpus li { color: var(--ink); }
+.corpus li .muted { font-size: 0.875rem; margin-left: 6px; }
+
+.mode { margin: 0; font-size: 0.9375rem; color: var(--muted); max-width: 75ch; }
+.mode .muted { display: block; }
+
+/* Question */
+
+/* main also has .wrap, whose padding shorthand would otherwise win. */
+main.wrap { padding-top: 28px; padding-bottom: 64px; }
+
+.ask {
+  display: flex;
+  gap: 10px;
+}
+
+.ask input {
+  flex: 1;
+  min-width: 0;
+  padding: 13px 16px;
+  font: inherit;
+  font-size: 1.0625rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid #c9cfd5;
+  border-radius: var(--radius);
+}
+
+.ask input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.ask button {
+  padding: 0 24px;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: 0;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.ask button:hover { background: var(--accent-strong); }
+.ask button:disabled { opacity: 0.6; cursor: progress; }
+
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 0.875rem;
+}
+
+.example {
+  padding: 4px 10px;
+  font: inherit;
+  text-align: left;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.example:hover { border-color: var(--accent); color: var(--accent-strong); }
+
+/* Results */
+
+.results {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 48px;
+  margin-top: 36px;
+  align-items: start;
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.empty { margin: 0; color: var(--muted); max-width: 60ch; }
+
+.answer-text {
+  margin: 0;
+  font-size: 1.1875rem;
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+.answer.refused .answer-text { color: var(--muted); }
+
+.marker {
+  display: inline-block;
+  min-width: 1.45em;
+  margin: 0 1px;
+  padding: 0 4px;
+  font: 600 0.75rem/1.5 var(--sans);
+  vertical-align: 0.35em;
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.marker:hover,
+.marker.active { color: #fff; background: var(--accent); }
+
+.answer-meta {
+  margin: 18px 0 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.note {
+  margin: 14px 0 0;
+  padding: 10px 14px;
+  font-size: 0.9375rem;
+  background: var(--surface);
+  border-left: 3px solid #b7791f;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.error {
+  margin: 0;
+  padding: 12px 14px;
+  color: #8a1c1c;
+  background: #fdf0f0;
+  border-radius: var(--radius);
+}
+
+/* Sources */
+
+.sources { position: sticky; top: 20px; }
+
+.source-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+
+.source {
+  display: flex;
+  gap: 12px;
+  padding: 16px 16px 16px 14px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.source + .source { margin-top: 12px; }
+
+.source.active { border-left-color: var(--accent); }
+
+.source:focus { outline: none; }
+.source:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.source-number {
+  font: 600 0.875rem/1.6 var(--sans);
+  color: var(--accent-strong);
+}
+
+.source-body { min-width: 0; }
+
+.source-title { font-weight: 600; line-height: 1.35; }
+
+.source-where { font-size: 0.875rem; color: var(--muted); }
+
+.passage {
+  margin: 8px 0 0;
+  font: 1rem/1.6 var(--serif);
+  white-space: pre-line;
+  color: #333c44;
+}
+
+.passage mark {
+  color: var(--ink);
+  background: var(--accent-soft);
+  box-shadow: inset 0 -2px 0 var(--accent);
+  padding: 0 1px;
+}
+
+.source.active .passage mark { background: #c3e2e4; }
+
+.source-path {
+  margin-top: 6px;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  word-break: break-all;
+}
+
+@media (max-width: 860px) {
+  .results { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  .sources { position: static; }
+  .source-list { max-height: none; overflow: visible; }
+}
+
+@media (max-width: 520px) {
+  .wrap { padding: 0 16px; }
+  .masthead { padding: 22px 0 18px; }
+  h1 { font-size: 1.5rem; }
+  .ask { flex-direction: column; }
+  .ask button { padding: 12px 24px; }
+  .answer-text { font-size: 1.0625rem; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .source { transition: border-color 0.2s ease; }
+}
