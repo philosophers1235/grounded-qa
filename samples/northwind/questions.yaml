@@ -1,0 +1,150 @@
+# Evaluation questions for the Northwind sample corpus.
+#
+# An answerable question lists the sources that contain its answer; citing any
+# one of them counts as correct. `section` matches the start of a chunk's
+# heading, case-insensitively. Questions with `answerable: false` are not
+# covered by the documents and must be declined.
+#
+# `example: true` marks the questions shown as suggestions in the web UI.
+
+questions:
+  - id: warranty-length
+    question: How long is the standard warranty on the Linea 24 boiler?
+    example: true
+    sources:
+      - doc: linea-24-warranty
+        section: Standard warranty period
+
+  - id: extension-conditions
+    question: What do I have to do to get the 5-year warranty?
+    sources:
+      - doc: linea-24-warranty
+        section: Extended warranty to 5 years
+
+  - id: skipped-service
+    question: What happens to my extended warranty if I skip a yearly service?
+    example: true
+    sources:
+      - doc: linea-24-warranty
+        section: If an annual service is missed
+      - doc: maintenance-terms
+        section: Rescheduling and missed appointments
+
+  - id: never-serviced
+    question: My boiler is 3 years old and was never serviced. Is it still under warranty?
+    sources:
+      - doc: linea-24-warranty
+        section: If an annual service is missed
+      - doc: linea-24-warranty
+        section: Extended warranty to 5 years
+
+  - id: registration-deadline
+    question: How many days after installation do I have to register the boiler?
+    sources:
+      - doc: linea-24-warranty
+        section: Registering the boiler
+
+  - id: frost-damage
+    question: Is frost damage covered by the warranty?
+    sources:
+      - doc: linea-24-warranty
+        section: What the warranty does not cover
+
+  - id: callout-fee-year-four
+    question: Do I pay anything for a repair visit in the fourth year?
+    sources:
+      - doc: linea-24-warranty
+        section: What the extended warranty covers
+
+  - id: serial-number
+    question: Where do I find the serial number of my boiler?
+    sources:
+      - doc: linea-24-warranty
+        section: How to make a warranty claim
+
+  - id: care-plus-price
+    question: How much does the Care Plus plan cost?
+    example: true
+    sources:
+      - doc: maintenance-terms
+        section: Maintenance plans
+
+  - id: missed-appointment-fee
+    question: What is the fee if I miss a maintenance appointment?
+    sources:
+      - doc: maintenance-terms
+        section: Rescheduling and missed appointments
+
+  - id: coaxial-flue-length
+    question: What is the maximum length of a 60/100 coaxial flue?
+    sources:
+      - doc: installer-faq
+        section: What flue lengths are allowed
+
+  - id: error-e10
+    question: What does error code E10 mean?
+    example: true
+    sources:
+      - doc: linea-24-service-guide
+        section: Error codes
+
+  - id: cold-system-pressure
+    question: What should the system pressure be when the heating is cold?
+    sources:
+      - doc: linea-24-service-guide
+        section: System pressure
+      - doc: maintenance-terms
+        section: What the annual service includes
+
+  - id: return-circuit-board
+    question: Can I return a circuit board I ordered by mistake?
+    sources:
+      - doc: spare-parts-returns
+        section: Parts that cannot be returned
+
+  - id: refund-unused-part
+    question: Can I get a refund for a part I never used?
+    sources:
+      - doc: spare-parts-returns
+        section: Returning unused parts
+
+  - id: parts-availability
+    question: How long will spare parts be available after the boiler is discontinued?
+    sources:
+      - doc: spare-parts-returns
+        section: Availability of spare parts
+
+  - id: frost-protection
+    question: At what temperature does frost protection start?
+    sources:
+      - doc: linea-24-service-guide
+        section: Frost protection
+
+  - id: solar-panels
+    question: Does Northwind offer a warranty on solar thermal panels?
+    answerable: false
+
+  - id: boiler-price
+    question: What is the retail price of a Linea 24 boiler?
+    answerable: false
+
+  - id: smartphone-app
+    question: Can I control the Linea 24 from a smartphone app?
+    example: true
+    answerable: false
+
+  - id: bulk-discount
+    question: Is there a discount if I buy three boilers for an apartment block?
+    answerable: false
+
+  - id: managing-director
+    question: Who is the managing director of Northwind Heating?
+    answerable: false
+
+  - id: heat-pump-install
+    question: How long does it take to install a heat pump?
+    answerable: false
+
+  - id: noise-level
+    question: What is the noise level of the Linea 24 in decibels?
+    answerable: false

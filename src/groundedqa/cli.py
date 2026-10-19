@@ -10,9 +10,10 @@ from .chunking import DEFAULT_MAX_CHARS, DEFAULT_OVERLAP_CHARS
 from .claude import ClaudeError
 from .config import Settings
 from .dense import load_embedder
+from .evaluation import load_questions, run_eval
 from .index import IndexNotFound, build_index
 from .pipeline import QAService
-from .render import print_answer
+from .render import print_answer, print_report
 
 console = Console()
 
@@ -56,6 +57,13 @@ def build_parser() -> argparse.ArgumentParser:
     ask.add_argument("--show-retrieval", action="store_true", help="print the retrieved chunks and their scores")
     ask.set_defaults(handler=cmd_ask)
 
+    evaluate = commands.add_parser("eval", parents=[common], help="score the system against a YAML question set")
+    evaluate.add_argument("questions", type=Path)
+    evaluate.add_argument("--offline", action="store_true", help="evaluate offline extractive mode (no API calls)")
+    evaluate.add_argument("-k", "--top-k", type=int, help="number of chunks to retrieve")
+    evaluate.add_argument("--out", type=Path, default=Path("eval_results.json"), help="where to write per-question results")
+    evaluate.set_defaults(handler=cmd_eval)
+
     return parser
 
 
@@ -79,6 +87,18 @@ def cmd_ask(args, settings: Settings) -> int:
     service = QAService.from_settings(settings, offline=args.offline)
     answer = service.ask(args.question)
     print_answer(console, answer, show_retrieval=args.show_retrieval)
+    return 0
+
+
+def cmd_eval(args, settings: Settings) -> int:
+    questions = load_questions(args.questions)
+    service = QAService.from_settings(settings, offline=args.offline)
+    if service.claude is not None:
+        console.print(f"Calling {settings.model} for {len(questions)} questions (pass --offline to avoid API calls).")
+    report = run_eval(service, questions, settings.top_k)
+    print_report(console, report)
+    report.write(args.out, args.questions)
+    console.print(f"\nPer-question results written to {args.out}")
     return 0
 
 
