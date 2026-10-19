@@ -2,7 +2,7 @@
 
 Answers questions from a company's own documents, shows the source of every claim, and says so when the documents do not contain the answer.
 
-![screenshot](docs/screenshot.png)
+![A warranty question answered with the sentence it came from highlighted](docs/screenshot.png)
 
 ## Why
 
